@@ -1,7 +1,5 @@
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
+import java.nio.file.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,7 +9,7 @@ import java.util.List;
  */
 public class D1_ChronalCalibration {
     private int frequency;
-    private Path filePath;
+    private Path inputPath;
     private List<String> lines;
     private ArrayList<Integer> seenFreq;
 
@@ -32,7 +30,7 @@ public class D1_ChronalCalibration {
      */
     private D1_ChronalCalibration(String location, String file){
         frequency = 0;
-        filePath = Paths.get(location, file);
+        inputPath = Paths.get(location, file);
         seenFreq = new ArrayList<>();
     }
 
@@ -43,13 +41,13 @@ public class D1_ChronalCalibration {
     private void calculate(){
         seenFreq.add(frequency);
         try {
-            lines = Files.readAllLines(filePath);
+            lines = Files.readAllLines(inputPath);
             for (String line : lines){
                 setFrequency(line);
             }
             System.out.println("The frequency is: " + frequency);
         } catch (IOException e){
-            System.out.println(e);
+            System.out.println(e.getMessage());
         }
     }
 
@@ -70,11 +68,11 @@ public class D1_ChronalCalibration {
 
     /**
      * Checks if a frequency has been seen before.
-     * @return Null when frequency has not been seen before. Otherwise the frequnecy that has been seen before.
+     * @return Null when frequency has not been seen before. Otherwise the frequency that has been seen before.
      */
     private Integer calibrateLoop(){
         try {
-            lines = Files.readAllLines(filePath);
+            lines = Files.readAllLines(inputPath);
             for (String line : lines){
                 setFrequency(line);
                 if(seenFreq.contains(frequency)){
@@ -82,14 +80,14 @@ public class D1_ChronalCalibration {
                 }
                 seenFreq.add(frequency);
             }
-        } catch (Exception e){
-            System.out.println(e.toString());
+        } catch (IOException e){
+            System.out.println(e.getMessage());
         }
         return null;
     }
 
     /**
-     * Changes the freqentie according to the line. + will add, - will remove.
+     * Changes the frequency according to the line. + will add, - will remove.
      * @param line The line with +[number] or -[number]
      */
     private void setFrequency(String line){

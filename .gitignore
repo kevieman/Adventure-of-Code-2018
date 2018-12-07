@@ -1,4 +1,5 @@
 
+.idea/*
 .idea/encodings.xml
 .idea/misc.xml
 .idea/modules.xml
@@ -6,3 +7,4 @@
 .idea/workspace.xml
 Adventure-of-Code-2018.iml
 out/production/Adventure-of-Code-2018/D1_ChronalCalibration.class
+out/production/Adventure-of-Code-2018/D2_InventoryManagementSystem.class
