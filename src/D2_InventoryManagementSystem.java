@@ -3,13 +3,12 @@ import java.nio.file.*;
 import java.util.*;
 
 public class D2_InventoryManagementSystem {
-    //TODO: Commenting
     private List<String> lines;
 
     public static void main(String[] args) {
         D2_InventoryManagementSystem d2 = new D2_InventoryManagementSystem("assets", "Day2-Input.txt");
         System.out.println("Answer to part 1 is: "+d2.getChecksum());
-        System.out.println("Answer to part 2 is: "+d2.compareLines());
+        System.out.println("Answer to part 2 is: "+d2.getCommonLetters());
     }
 
     /**
@@ -26,6 +25,10 @@ public class D2_InventoryManagementSystem {
         }
     }
 
+    /**
+     * Calculates the checksum of all the lines.
+     * @return The checksum
+     */
     private Integer getChecksum() {
         int checksum;
         int sumThree = 0;
@@ -48,6 +51,12 @@ public class D2_InventoryManagementSystem {
         return checksum;
     }
 
+    /**
+     * Checks if the line has an certain amount of characters.
+     * @param line The line to check.
+     * @param amount The amount top check if a line has a character which is present in the given amount.
+     * @return  True if the line has the given amount of characters.
+     */
     private boolean hasAmount(String line, int amount){
         boolean hasAmount = false;
         List<String> asList = Arrays.asList(line.split(""));
@@ -62,7 +71,11 @@ public class D2_InventoryManagementSystem {
         return hasAmount;
     }
 
-    private String compareLines(){
+    /**
+     * generates a string of the letters who are common between two lines.
+     * @return All the common letters between two compared lines.
+     */
+    private String getCommonLetters(){
         StringBuilder toReturn = new StringBuilder();
 
         for (int i = 0; i < lines.size(); i++){
@@ -73,7 +86,8 @@ public class D2_InventoryManagementSystem {
     }
 
     /**
-     *
+     * Compares a line with every line in lines.
+     * It will return a string with the common letters if the lines differ by one letter.
      * @param index index of the line to check
      * @return The line who differ by 1 letter and remove that letter.
      */
