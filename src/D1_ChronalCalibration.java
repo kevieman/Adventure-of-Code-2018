@@ -9,9 +9,10 @@ import java.util.List;
  */
 public class D1_ChronalCalibration {
     private int frequency;
-    private Path inputPath;
     private List<String> lines;
     private ArrayList<Integer> seenFreq;
+    private String location;
+    private String file;
 
     /**
      * Runs the program
@@ -30,8 +31,9 @@ public class D1_ChronalCalibration {
      */
     private D1_ChronalCalibration(String location, String file){
         frequency = 0;
-        inputPath = Paths.get(location, file);
         seenFreq = new ArrayList<>();
+        this.location = location;
+        this.file = file;
     }
 
     /**
@@ -40,15 +42,11 @@ public class D1_ChronalCalibration {
      */
     private void calculate(){
         seenFreq.add(frequency);
-        try {
-            lines = Files.readAllLines(inputPath);
-            for (String line : lines){
-                setFrequency(line);
-            }
-            System.out.println("The frequency is: " + frequency);
-        } catch (IOException e){
-            System.out.println(e.getMessage());
+        lines = new LineReader(location, file).getLines();
+        for (String line : lines){
+            setFrequency(line);
         }
+        System.out.println("The frequency is: " + frequency);
     }
 
     /**
@@ -71,17 +69,13 @@ public class D1_ChronalCalibration {
      * @return Null when frequency has not been seen before. Otherwise the frequency that has been seen before.
      */
     private Integer calibrateLoop(){
-        try {
-            lines = Files.readAllLines(inputPath);
-            for (String line : lines){
-                setFrequency(line);
-                if(seenFreq.contains(frequency)){
-                    return frequency;
-                }
-                seenFreq.add(frequency);
+        lines = new LineReader(location, file).getLines();
+        for (String line : lines){
+            setFrequency(line);
+            if(seenFreq.contains(frequency)){
+                return frequency;
             }
-        } catch (IOException e){
-            System.out.println(e.getMessage());
+            seenFreq.add(frequency);
         }
         return null;
     }

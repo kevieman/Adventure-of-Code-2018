@@ -1,7 +1,3 @@
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -22,15 +18,9 @@ public class D3_NoMatterHowYouSliceIt {
      * @param file Filename (Example: 'text.txt')
      */
     private D3_NoMatterHowYouSliceIt(String location, String file) {
-        Path inputPath = Paths.get(location, file);
         pattern = Pattern.compile("\\d+");
 
-        // Fill up lines
-        try {
-            lines = Files.readAllLines(inputPath);
-        } catch (IOException e) {
-            System.out.println(e.getMessage());
-        }
+        lines = new LineReader(location, file).getLines();
 
         System.out.println(getOverlappingSum());
         getNoCollideClaim();

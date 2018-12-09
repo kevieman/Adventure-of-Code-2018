@@ -1,5 +1,3 @@
-import java.io.IOException;
-import java.nio.file.*;
 import java.util.*;
 
 public class D2_InventoryManagementSystem {
@@ -17,12 +15,7 @@ public class D2_InventoryManagementSystem {
      * @param file Filename (Example: 'text.txt')
      */
     private D2_InventoryManagementSystem(String location, String file){
-        Path inputPath = Paths.get(location, file);
-        try {
-            lines = Files.readAllLines(inputPath);
-        } catch (IOException e) {
-            System.out.println(e.getMessage());
-        }
+        lines = new LineReader(location, file).getLines();
     }
 
     /**
