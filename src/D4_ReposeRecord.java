@@ -11,16 +11,53 @@ public class D4_ReposeRecord {
 
     private D4_ReposeRecord(String location, String file) {
         guardAsleep = new HashMap<>();
-
         lines = new LineReader(location, file).getLinesSorted();
 
         fillGuardAsleep();
+
+        int answerA = getMostSleeper() * getMostMinAslpeep(getMostSleeper());
+        System.out.println("Answer to part 1: " + answerA);
+    }
+
+    private Integer getMostSleeper() {
+        Integer mostSleeper = null;
+        int mostMinutes = 0;
+
+        for (Integer key : guardAsleep.keySet()) {
+            int totalMinutes = 0;
+            int[] minutes = guardAsleep.get(key);
+
+            for (int minute : minutes){
+                totalMinutes += minute;
+            }
+
+            if (mostSleeper == null || totalMinutes > mostMinutes) {
+                mostSleeper = key;
+                mostMinutes = totalMinutes;
+            }
+        }
+        return mostSleeper;
+    }
+
+    private int getMostMinAslpeep(Integer key) {
+        int mostMin = 0;
+        int min = 0;
+        int[] minutes = guardAsleep.get(key);
+
+        for (int i = 0; i < minutes.length; i++) {
+            if (minutes[i] > mostMin) {
+                min = i;
+                mostMin = minutes[i];
+            }
+        }
+
+        return min;
     }
 
     private void fillGuardAsleep(){
         Integer start = null;
-        int stop;
         Integer guardID = null;
+        int stop;
 
         for (String line : lines) {
             String[] splitted = line.split(" ");
@@ -39,14 +76,10 @@ public class D4_ReposeRecord {
                 if(guardAsleep.containsKey(guardID))
                     a = guardAsleep.get(guardID);
 
-                if (start != null) {
-                    for (int i = start - 1; i <= stop; i++) {
+                if (start != null)
+                    for (int i = start ; i < stop; i++)
                         a[i] += 1;
-                    }
-                }
-
                 guardAsleep.put(guardID, a);
-
             }
         }
     }
