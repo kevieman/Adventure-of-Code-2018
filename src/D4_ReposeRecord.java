@@ -15,8 +15,9 @@ public class D4_ReposeRecord {
 
         fillGuardAsleep();
 
-        int answerA = getMostSleeper() * getMostMinAslpeep(getMostSleeper());
+        int answerA = getMostSleeper() * getMostMinAsleep(getMostSleeper())[0];
         System.out.println("Answer to part 1: " + answerA);
+        System.out.println("Answer to part 2: " + getFrequentSleeper());
     }
 
     private Integer getMostSleeper() {
@@ -39,7 +40,23 @@ public class D4_ReposeRecord {
         return mostSleeper;
     }
 
-    private int getMostMinAslpeep(Integer key) {
+    private int getFrequentSleeper() {
+        int frequentSleeper = 0;
+        int whichMin = 0;
+        int min = 0;
+
+        for (Integer key : guardAsleep.keySet()) {
+            if (getMostMinAsleep(key)[1] > min) {
+                min = getMostMinAsleep(key)[1];
+                whichMin = getMostMinAsleep(key)[0];
+                frequentSleeper = key;
+            }
+        }
+
+        return frequentSleeper * whichMin;
+    }
+
+    private int[] getMostMinAsleep(Integer key) {
         int mostMin = 0;
         int min = 0;
         int[] minutes = guardAsleep.get(key);
@@ -51,7 +68,7 @@ public class D4_ReposeRecord {
             }
         }
 
-        return min;
+        return new int[] {min, mostMin};
     }
 
     private void fillGuardAsleep(){
